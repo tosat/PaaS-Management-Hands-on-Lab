@@ -1,0 +1,61 @@
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Policy Holders</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Policy Holder
+            </th>
+            <th>
+                Policy Name
+            </th>
+            <th>
+                Policy #
+            </th>
+            <th>
+                Is Active
+            </th>
+            <th>
+                Policy Amount
+            </th>
+            <th>
+                Deductible
+            </th>
+            <th>
+                Out of Pocket Max
+            </th>
+            <th>
+                Effective Date
+            </th>
+            <th>
+                Expiration Date
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var policyHolder in ViewBag.PolicyHolders)
+        {
+            <tr>
+                <td><a href="~/People/GetPerson/@policyHolder.PersonId">@policyHolder.PersonName</a></td>
+                <td><a href="~/Policy/GetPolicy/@policyHolder.PolicyId">@policyHolder.PolicyName</a></td>
+                <td>@policyHolder.PolicyNumber</td>
+                <td><input type="checkbox" id="Active" checked="@policyHolder.Active" disabled="disabled" /></td>
+                <td>@(((decimal)policyHolder.PolicyAmount).ToString("C2"))</td>
+                <td>@(((decimal)policyHolder.Deductible).ToString("C2"))</td>
+                <td>@(((decimal)policyHolder.OutOfPocketMax).ToString("C2"))</td>
+                <td>@(((DateTime)policyHolder.EffectiveDate).ToString("yyyy/MM/dd"))</td>
+                <td>@(((DateTime)policyHolder.ExpirationDate).ToString("yyyy/MM/dd"))</td>
+                <td><a href="~/PolicyHolder/GetDetails/@policyHolder.Id">Details</a></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
