@@ -3,17 +3,11 @@ name: Publish to Azure
 on:
   workflow_dispatch:
     inputs:
-      target-container-SAS-token:
-        description: SAS Token of target container
+      target-policydocuments-SAS-token:
+        description: SAS Token of PolicyDocument container
         required: true
-      client-id:
-        description: Client Id
-        required: true
-      tenant-id:
-        description: Azure AD Tenant Id
-        required: true
-      subscription-id:
-        description: Azure Subscription Id
+      target-backpack-SAS-token:
+        description: SAS Token of backpac container
         required: true
 
 jobs:
@@ -32,22 +26,18 @@ jobs:
           Add-Type -AssemblyName System.IO.Compression.FileSystem
           [System.IO.Compression.ZipFile]::ExtractToDirectory('C:\PolicyDocuments.zip', 'C:\PolicyDocuments')
       
-      - name: Copy to Blob
+      - name: Copy Policy Documents
         shell: pwsh
         run: |
-          azcopy copy 'C:\PolicyDocuments\*.pdf' '${{ github.event.inputs.target-container-SAS-token }}' --recursive=true
+          azcopy copy 'C:\PolicyDocuments\*.pdf' '${{ github.event.inputs.target-policydocuments-SAS-token }}' --recursive=true
 
-  build-and-deploy:
-    name: Build and Deploy Web App
-    runs-on: ubuntu-latest
+      - name: Download file
+        shell: pwsh
+        run: |
+          Invoke-WebRequest 'https://raw.githubusercontent.com/kohei3110/PaaS-Management-Hands-on-Lab/master/src/Contents/ContosoInsurance.bacpac'
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Copy backpac file
+        shell: pwsh
+        run: |
+          azcopy copy 'ContosoInsurance.bacpac' '${{ github.event.inputs.target-backpack-SAS-token }}'
 
-      - name: Login to Azure
-        uses: azure/login@v1.4.0
-        with:
-          client-id: ${{ github.event.inputs.client-id }}
-          tenant-id: ${{ github.event.inputs.tenant-id }}
-          subscription-id: ${{ github.event.inputs.subscription-id }}
