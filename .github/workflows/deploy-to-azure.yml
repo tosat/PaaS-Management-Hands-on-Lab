@@ -17,7 +17,7 @@ jobs:
       - name: Download and Unzip
         shell: pwsh
         run: |
-          Invoke-WebRequest 'https://raw.githubusercontent.com/kohei3110/PaaS-Management-Hands-on-Lab/master/src/Contents/PolicyDocuments.zip' -OutFile 'C:\PolicyDocuments.zip'
+          Invoke-WebRequest 'https://github.com/kohei3110/PaaS-Management-Hands-on-Lab/blob/master/src/Contents/PolicyDocuments.zip?raw=true' -OutFile 'C:\PolicyDocuments.zip'
           Add-Type -AssemblyName System.IO.Compression.FileSystem
           [System.IO.Compression.ZipFile]::ExtractToDirectory('PolicyDocuments.zip', 'C:\PolicyDocuments')
       
