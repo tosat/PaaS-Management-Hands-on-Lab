@@ -1,0 +1,27 @@
+name: Publish to Azure
+
+on:
+  workflow_dispatch:
+    inputs:
+      target-container-SAS-token:
+        description: SAS Token of target container
+        required: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download and Unzip
+        shell: pwsh
+        run: |
+          Invoke-WebRequest 'https://raw.githubusercontent.com/kohei3110/PaaS-Management-Hands-on-Lab/master/src/PolicyDocuments/PolicyDocuments.zip' -OutFile 'C:\PolicyDocuments.zip'
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          [System.IO.Compression.ZipFile]::ExtractToDirectory('PolicyDocuments.zip', 'C:\PolicyDocuments')
+      
+      - name: Copy to Blob
+        shell: pwsh
+        run: |
+          azcopy sync --delete-destination true C:\PolicyDocuments ${{ github.event.target-container-SAS-token }}
