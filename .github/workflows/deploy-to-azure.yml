@@ -12,7 +12,7 @@ on:
 
 jobs:
   copy-files:
-    name: Copy PDF Files to BLOB
+    name: Copy Files to BLOB
     runs-on: windows-latest
 
     steps:
@@ -34,10 +34,10 @@ jobs:
       - name: Download file
         shell: pwsh
         run: |
-          Invoke-WebRequest 'https://raw.githubusercontent.com/kohei3110/PaaS-Management-Hands-on-Lab/master/src/Contents/ContosoInsurance.bacpac'
+          Invoke-WebRequest 'https://raw.githubusercontent.com/kohei3110/PaaS-Management-Hands-on-Lab/master/src/Contents/ContosoInsurance.bacpac' -OutFile 'C:\ContosoInsurance.bacpac'
 
       - name: Copy backpac file
         shell: pwsh
         run: |
-          azcopy copy 'ContosoInsurance.bacpac' '${{ github.event.inputs.target-backpack-SAS-token }}'
+          azcopy copy 'C:\ContosoInsurance.bacpac' '${{ github.event.inputs.target-backpack-SAS-token }}'
 
