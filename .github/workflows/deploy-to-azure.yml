@@ -3,25 +3,41 @@ name: Publish to Azure
 on:
   workflow_dispatch:
     inputs:
-      target-container-SAS-token:
-        description: SAS Token of target container
+      target-policydocuments-SAS-token:
+        description: SAS Token of PolicyDocument container
+        required: true
+      target-backpack-SAS-token:
+        description: SAS Token of backpac container
         required: true
 
 jobs:
-  build:
+  copy-files:
+    name: Copy Files to BLOB
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Download and Unzip
         shell: pwsh
         run: |
           Invoke-WebRequest 'https://github.com/kohei3110/PaaS-Management-Hands-on-Lab/blob/master/src/Contents/PolicyDocuments.zip?raw=true' -OutFile 'C:\PolicyDocuments.zip'
           Add-Type -AssemblyName System.IO.Compression.FileSystem
-          [System.IO.Compression.ZipFile]::ExtractToDirectory('PolicyDocuments.zip', 'C:\PolicyDocuments')
+          [System.IO.Compression.ZipFile]::ExtractToDirectory('C:\PolicyDocuments.zip', 'C:\PolicyDocuments')
       
-      - name: Copy to Blob
+      - name: Copy Policy Documents
         shell: pwsh
         run: |
-          azcopy sync --delete-destination true C:\PolicyDocuments ${{ github.event.target-container-SAS-token }}
+          azcopy copy 'C:\PolicyDocuments\*.pdf' '${{ github.event.inputs.target-policydocuments-SAS-token }}' --recursive=true
+
+      - name: Download file
+        shell: pwsh
+        run: |
+          Invoke-WebRequest 'https://raw.githubusercontent.com/kohei3110/PaaS-Management-Hands-on-Lab/master/src/Contents/ContosoInsurance.bacpac' -OutFile 'C:\ContosoInsurance.bacpac'
+
+      - name: Copy backpac file
+        shell: pwsh
+        run: |
+          azcopy copy 'C:\ContosoInsurance.bacpac' '${{ github.event.inputs.target-backpack-SAS-token }}'
+
