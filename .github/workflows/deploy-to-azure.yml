@@ -29,7 +29,7 @@ jobs:
       - name: Copy to Blob
         shell: pwsh
         run: |
-          azcopy sync --delete-destination true 'C:\PolicyDocuments\*.pdf' '${{ github.event.inputs.target-container-SAS-token }}'
+          azcopy copy 'C:\PolicyDocuments\*.pdf' '${{ github.event.inputs.target-container-SAS-token }}' --recursive=true
 
   build-and-deploy:
     name: Build and Deploy Web App
