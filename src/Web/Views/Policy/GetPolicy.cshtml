@@ -1,0 +1,33 @@
+@model Web.Models.Policy
+@{
+    ViewBag.Title = "GetPolicy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Policy Details</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label for="Name" class="control-label col-md-2">Name</label>
+        <div class="col-md-10">@Model.Name</div>
+    </div>
+
+    <div class="form-group">
+        <label for="Description" class="control-label col-md-2">Description</label>
+        <div class="col-md-10">@Model.Description</div>
+    </div>
+
+    <div class="form-group">
+        <label for="DefaultDeductible" class="control-label col-md-2">Default Deductible</label>
+        <div class="col-md-10">@Html.DisplayFor(model => model.DefaultDeductible)</div>
+    </div>
+
+    <div class="form-group">
+        <label for="DefaultOutOfPocketMax" class="control-label col-md-2">Default Out Of Pocket Max</label>
+        <div class="col-md-10">@Html.DisplayFor(model => model.DefaultOutOfPocketMax)</div>
+    </div>
+</div>
+
+<div>
+    <a href="~/Policy/">Back to List</a>
+</div>

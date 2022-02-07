@@ -1,0 +1,44 @@
+@model Web.Models.Policy
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Policies</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Policy Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Default Deductible
+            </th>
+            <th>
+                Default Out of Pocket Max
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var policy in ViewBag.Policies)
+        {
+            <tr>
+                <td><a href="~/Policy/GetPolicy/@policy.Id">View Details</a></td>
+                <td>@policy.Name</td>
+                <td>@policy.Description</td>
+                <td>@(((decimal)policy.DefaultDeductible).ToString("C2"))</td>
+                <td>@(((decimal)policy.DefaultOutOfPocketMax).ToString("C2"))</td>
+            </tr>
+        }
+
+        </tbody>
+</table>

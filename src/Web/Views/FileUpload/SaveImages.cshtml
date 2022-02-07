@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "File Upload";
+}
+
+<h2>Result</h2>
+
+<div>
+    <p>File upload was successful</p>
+</div>
+
+<div>
+    @foreach(var file in ViewBag.Files)
+    {
+        <span>@file</span><br />
+    }
+</div>
+
+<hr />
+
+<div>
+    <a href="~/FileUpload/">Back to Form</a>
+</div>
