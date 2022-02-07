@@ -24,4 +24,4 @@ jobs:
       - name: Copy to Blob
         shell: pwsh
         run: |
-          azcopy cp 'C:\PolicyDocuments' '${{ github.event.target-container-SAS-token }}' --recursive
+          azcopy copy 'C:\PolicyDocuments' '${{ github.event.inputs.target-container-SAS-token }}' --recursive=true
