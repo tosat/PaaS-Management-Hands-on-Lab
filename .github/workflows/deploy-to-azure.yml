@@ -6,13 +6,18 @@ on:
       target-container-SAS-token:
         description: SAS Token of target container
         required: true
+      azure-secret:
+        description: Secret (JSON)
+        required: true
 
 jobs:
-  build:
+  copy-files:
+    name: Copy PDF Files to BLOB
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Download and Unzip
         shell: pwsh
@@ -24,4 +29,17 @@ jobs:
       - name: Copy to Blob
         shell: pwsh
         run: |
-          azcopy copy 'C:\PolicyDocuments\*.pdf' '${{ github.event.inputs.target-container-SAS-token }}' --recursive=true
+          azcopy sync --delete-destination true 'C:\PolicyDocuments\*.pdf' '${{ github.event.inputs.target-container-SAS-token }}'
+
+  build-and-deploy:
+    name: Build and Deploy Web App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ github.event.inputs.azure-secret }}
