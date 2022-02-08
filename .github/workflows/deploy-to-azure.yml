@@ -1,4 +1,4 @@
-name: Publish to Azure
+name: Copy Files to Azure
 
 on:
   workflow_dispatch:
