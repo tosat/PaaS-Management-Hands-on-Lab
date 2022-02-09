@@ -36,15 +36,21 @@ February 2022
 
 ※選択したリソース グループのリージョンにすべてのリソースが展開
 
+<br />
+
 ## リソースの設定
 
 - Blob ストレージ
 
   - コンテナの作成
 
-    - 名前： **policydocuments**　パブリック アクセス レベル： **BLOB (BLOB 専用の匿名読み取りアクセス)**
+    - Web アプリケーションで使用する PDF ファイルの保存コンテナ
+    
+      名前： **policydocuments**　パブリック アクセス レベル： **BLOB (BLOB 専用の匿名読み取りアクセス)**
 
-    - 名前： **bacpac**　パブリック アクセス レベル： **プライベート (匿名アクセスはありません)**
+    - SQL Database の復元に使用する .bacpac ファイルの保存コンテナ
+    
+      名前： **bacpac**　パブリック アクセス レベル： **プライベート (匿名アクセスはありません)**
 
   - 作成した２つのコンテナの SAS トークンの作成
 
@@ -64,11 +70,15 @@ February 2022
 
 - GitHub リポジトリからファイルをコピー
 
-  - <a href="./actions">ワークフロー</a> へ移動
+  - <a href="../../actions">GitHub Actions</a> へ移動
 
+  - **** を選択し **Run workflow** をクリック
+
+    <img src="images/launch-workflow-01.png" />
+  
   - コピーしたコンテナの BLOB SAS URL をパラメーターへ貼り付け
 
-    <img src="images/launch-workflow.png" />
+    <img src="images/launch-workflow-02.png" />
 
     - **SAS Token of PolicyDocument container**: policydocuments コンテーの BLOB SAS URL
 
@@ -78,7 +88,7 @@ February 2022
 
 - SQL Database の作成
 
-  - **概要** タブの **データベースのインポート** をクリック
+  - **概要** ページの **データベースのインポート** をクリック
 
     <img src="images/import-database-01.png" />
   
@@ -96,8 +106,36 @@ February 2022
 
     - **サーバー管理者ログイン**、**パスワード**: リソース作成時に指定したものを入力
 
-    <img src="images/import-database-02.png" />
+      <img src="images/import-database-02.png" />
   
   - **OK** をクリックし、データベースの復元を実行
 
 - Web アプリケーションの展開
+
+  - WebApps の **概要** ページで **発行プロファイルの取得** をクリック
+
+  - ダウンロードしたファイルを保存
+
+  - GitHub リポジトリの **Settings** を表示、**Actions secrets** へ新しいシークレットを作成
+
+    - シークレット名: **AZURE_WEBAPP_PUBLISH_PROFILE**
+
+    - 値: ダウンロードした発行プロファイルの内容を貼り付け
+
+      <img src="images/add-new-secret.png" />
+  
+  - GitHub Actions のワークフローを実行し、アプリケーションを展開
+
+- Web アプリケーションの構成
+
+  - WebApps の **構成** ページで、以下４つのアプリケーション設定を追加
+
+    - 名前: **StorageAccountName** / 値: ストレージ アカウント名
+
+    - 名前: **ContainerName** / 値: **policydocuments**  (PDF ファイルを保存したコンテナ名)
+
+    - 名前: **BlobConnectionString** / 値: ストレージ アカウントへの接続文字列
+
+    - 名前: **SqlConnectionString** / 値: ContosoInsurane データベースへの接続文字列
+  
+  - **保存** をクリックし、アプリケーションを再起動
