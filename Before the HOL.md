@@ -40,6 +40,8 @@ February 2022
 
 ## リソースの設定
 
+※ **GitHub Actoins を使用してファイルのコピー、Web アプリケーションの展開を行うためにリポジトリを自身の GitHub アカウントに Fork してください。**
+
 - Blob ストレージ
 
   - コンテナの作成
@@ -125,6 +127,10 @@ February 2022
       <img src="images/add-new-secret.png" />
   
   - GitHub Actions のワークフローを実行し、アプリケーションを展開
+
+    - **Run workflow** をクリックし、展開先の Web Apps の名前をパラメータへ入力
+
+    - **Run workflow** をクリック
 
 - Web アプリケーションの構成
 
