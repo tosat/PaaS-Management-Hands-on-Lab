@@ -9,7 +9,21 @@ February 2022
 
 - [Exercise 1: サービス・リソース正常性](#exercise-1-サービス・リソース正常性)
 
+  - [Task 1: サービス正常性アラートの追加](#task-1-サービス正常性アラートの追加)
+
+  - [Task 2: リソース正常性アラートの追加](#task-2-リソース正常性アラートの追加)
+
 - [Exercise 2: PaaS サービスの保護](#exercise-2-paas-サービスの保護)
+
+  - [Task 1: Defender for Cloud の有効化](#task-1-defender-for-cloud-の有効化)
+
+  - [Task 2: Application Insights の追加](#task-2-application-insights-の追加)
+
+  - [Task 3: SQL Database サーバーレベルの監査設定](#task-3-sql-database-サーバーレベルの監査設定)
+
+  - [Task 4: SQL Database 診断設定](#task-4-sql-database-診断設定)
+
+  - [Task 5: SQL Database データの検出と分類](#task-5-sql-database-データの検出と分類)
 
 <br />
 
@@ -158,14 +172,130 @@ February 2022
 
   ※最初の 30 日間は無料でお使いいただけます
 
-### Application Insights  
+<br />
 
-### App Service - 診断設定
+### Task 2: Application Insights の追加
 
-### SQL Server - 監査
+- App Service の管理ブレードへ移動し、**Application Insights** ページを表示
 
-### SQL Database - データの検出と分類
+- **Turn on Application Insights** をクリック
 
-### SQL Database - 診断設定
+  <img src="images/add-application-insights-01.png" />
 
+- **Create new resource** を選択
 
+  - **New resource name**： Application Insights の名前を入力（任意）
+
+  - **Location**： App Service と同じ地域を選択
+
+  - **Log Analytics Workspace**： サブスクリプションに作成済みの Log Analytics Workspace を選択
+
+  <img src="images/add-application-insights-02.png" />
+
+- **Apply** をクリック
+
+<br />
+
+### App Service への診断設定の追加
+
+- App Service の管理ブレードの **診断設定** ページを表示
+
+- **＋ 診断設定を追加する** をクリック
+
+  <img src="images/app-diag-01.png" />
+
+- 名前を入力し、取得するログ・メトリック、出力先を選択
+
+  - **診断設定の名前**： *diag-<App service 名>* （任意）
+
+  - **ログ**： すべて選択
+
+  - **メトリック**： すべて選択
+
+  - **宛先の詳細**：
+
+    - **Log Analytics ワークスペースへの送信**： オン
+
+    - **サブスクリプション**： ワークショップで使用中のサブスクリプション
+
+    - **Log Analytics ワークスペース**： サブスクリプションに作成済みの Log Analytics ワークスペース
+
+    <img src="images/app-diag-02.png" />
+
+- **保存** をクリック
+
+<br />
+
+### Task 3: SQL Database サーバーレベルの監査設定
+
+- **ContosoInsurance** データベースの管理ブレードへ移動
+
+- **概要** ページから **サーバー名** をクリック
+
+- **セキュリティ** - **監査** を選択
+
+  - **Azure SQL 監査を有効にする**： オン
+
+  - **監査ログの保存先**： ログ分析
+
+    - **サブスクリプション**： ワークショップで使用中のサブスクリプション
+
+    - **ログ分析**： サブスクリプションに作成済みの Log Analytics ワークスペース
+
+    <img src="images/sql-audit-01.png" />
+
+- **保存** をクリック
+
+<br />
+
+### Task 4: SQL Database 診断設定
+
+- **ContosoInsurance** データベースの管理ブレードへ移動
+
+- **監視** - **診断設定** を選択
+
+- **＋ 診断設定を追加する** をクリック
+
+  <img src="images/sql-diag-01.png" />
+
+- 名前を入力し、取得するログ・メトリック、出力先を選択
+
+  - **診断設定の名前**： *diag-ContosoInsurance* （任意）
+
+  - **ログ**： **all logs** を選択
+
+  - **メトリック**： すべて選択
+
+  - **宛先の詳細**：
+
+    - **Log Analytics ワークスペースへの送信**： オン
+
+    - **サブスクリプション**： ワークショップで使用中のサブスクリプション
+
+    - **Log Analytics ワークスペース**： サブスクリプションに作成済みの Log Analytics ワークスペース
+
+    <img src="images/sql-diag-02.png" />
+
+<br />
+
+### Task 5: SQL Database データの検出と分類
+
+- **ContosoInsurance** データベースの管理ブレードへ移動
+
+- **セキュリティ** - **データの検出と分類** を選択
+
+- **分類の推奨事項が指定された 7 個の列が見つかりました →** のメッセージをクリック
+
+  <img src="images/data-classification-01.png" />
+
+- **すべて選択** にチェックを付け、**選択した推奨事項を受け入れます** をクリック
+
+  <img src="images/data-classification-02.png" />
+
+- **保存** をクリック
+
+- **概要** タブでデータ分類の状況を確認
+
+  <img src="images/data-classification-03.png" />
+
+<br />
