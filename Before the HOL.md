@@ -30,6 +30,8 @@ February 2022
 
 - **logAnalyticsWorkspace**: LogAnalytics ワークスペース名
 
+- **loadtestingWorkspace**: Load Testing ワークスペース名
+
 <br />
 
 ※事前にリソース グループの作成が必要
@@ -74,6 +76,14 @@ February 2022
 
   - <a href="../../actions">GitHub Actions</a> へ移動
 
+  - **I understand my workflows, go ahead and enable them** をクリック
+
+    <img src="images/allow-workflow-01.png" />
+
+    ※フォークされたリポジトリで無効にされたワークフローを許可
+
+    ※メッセージが表示されない場合は、GitHub へサインインが必要
+
   - **** を選択し **Run workflow** をクリック
 
     <img src="images/launch-workflow-01.png" />
@@ -87,6 +97,8 @@ February 2022
     - **SAS Token of backpac container**: bacpac コンテナーの BLOB SAS URL
 
   - **Run workflow** をクリックして、ワークフローを実行
+
+<br />
 
 - SQL Database の作成
 
@@ -112,6 +124,8 @@ February 2022
   
   - **OK** をクリックし、データベースの復元を実行
 
+<br />
+
 - Web アプリケーションの展開
 
   - WebApps の **概要** ページで **発行プロファイルの取得** をクリック
@@ -132,6 +146,8 @@ February 2022
 
     - **Run workflow** をクリック
 
+<br />
+
 - Web アプリケーションの構成
 
   - WebApps の **構成** ページで、以下４つのアプリケーション設定を追加
@@ -145,6 +161,8 @@ February 2022
     - 名前: **SqlConnectionString** / 値: ContosoInsurane データベースへの接続文字列
   
   - **保存** をクリックし、アプリケーションを再起動
+
+<br />
 
 - アプリケーションの動作確認
 
@@ -175,3 +193,49 @@ February 2022
     <img src="images/sample-app-05.png" />
 
     ※ファイルのアップロードを行う画面が表示
+
+<br />
+
+- Load Test の作成
+
+  - [JMX ファイル](#https://raw.githubusercontent.com/kohei3110/PaaS-Management-Hands-on-Lab/master/src/Contents/SampleTest.jmx) の内容をコピーし、メモ帳等に貼り付け
+
+  - **app-service-endpoint-url** を展開した App Service の FQDN へ置換
+
+    ※ App Service の名前が app1 の場合 app1.azurewebsites.net
+
+  - .jmx の拡張子を付けローカル ドライブへ保存
+
+  <br />
+
+  - リソース グループのアクセス制御から **ロールの割り当ての追加** を実行
+
+  - **ロード テスト共同作成者** にユーザーを追加
+
+    <img src="images/add-role-member-01.png" />
+  
+  <br />
+
+  - Azure Load Testing の **Tests** ページを表示
+
+    <img src="images/create-load-test-01.png" />
+  
+  - **Create test** をクリック
+
+    <img src="images/create-load-test-02.png" />
+  
+  - **Test name** へ **mcw-test** と入力し **Next: Test plan >** をクリック
+
+    <img src="images/create-load-test-03.png" />
+
+  - 前の手順で作成した .jmx ファイルをアップロード
+
+    <img src="images/create-load-test-04.png" />
+  
+  - **Monitoring** タブで **App Service** と **SQL Database** を追加
+
+    <img src="images/create-load-test-05.png" />
+  
+  - **Review + create** をクリックし、入力内容を確認後 **Create** をクリック
+
+  - テストが正常に終了することを確認
