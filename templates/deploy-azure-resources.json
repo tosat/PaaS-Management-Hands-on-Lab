@@ -38,6 +38,12 @@
             "metadata": {
                 "description": "LogAnalytics Workspace"
             }
+        },
+        "loadtestingWorkspace": {
+            "type": "string",
+            "metadata": {
+                "description": "Load Testing Workspace"
+            }
         }
     },
     "functions": [],
@@ -186,6 +192,13 @@
                 "publicNetworkAccessForIngestion": "Enabled",
                 "publicNetworkAccessForQuery": "Enabled"
             }
+        },
+        {
+            "type": "Microsoft.LoadTestService/loadtests",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[parameters('loadtestingWorkspace')]",
+            "location": "eastus2",
+            "properties": {}
         }
     ],
     "outputs": {}

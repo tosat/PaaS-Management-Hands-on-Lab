@@ -40,6 +40,8 @@ February 2022
 
 ## リソースの設定
 
+※ **GitHub Actoins を使用してファイルのコピー、Web アプリケーションの展開を行うためにリポジトリを自身の GitHub アカウントに Fork してください。**
+
 - Blob ストレージ
 
   - コンテナの作成
@@ -126,6 +128,10 @@ February 2022
   
   - GitHub Actions のワークフローを実行し、アプリケーションを展開
 
+    - **Run workflow** をクリックし、展開先の Web Apps の名前をパラメータへ入力
+
+    - **Run workflow** をクリック
+
 - Web アプリケーションの構成
 
   - WebApps の **構成** ページで、以下４つのアプリケーション設定を追加
@@ -139,3 +145,33 @@ February 2022
     - 名前: **SqlConnectionString** / 値: ContosoInsurane データベースへの接続文字列
   
   - **保存** をクリックし、アプリケーションを再起動
+
+- アプリケーションの動作確認
+
+  - App Service の **概要** ページの **URL** をクリック
+
+  - 新しいタブでアプリケーションが表示
+
+    <img src="images/sample-app-01.png" />
+  
+  - **Managed Policy Holders** をクリック
+
+    <img src="images/sample-app-02.png" />
+
+    ※データベースからレコードを取得して表示
+  
+  - **Details** をクリックし、詳細情報を表示
+
+    <img src="images/sample-app-03.png" />
+  
+  - **File Path** に表示される PDF ファイルへのリンクをクリック
+
+    <img src="images/sample-app-04.png" />
+
+    ※新しいタブで PDF ファイルが表示
+  
+  - 画面上部の **File Upload** をクリック
+
+    <img src="images/sample-app-05.png" />
+
+    ※ファイルのアップロードを行う画面が表示
