@@ -198,7 +198,7 @@ February 2022
 
 - Load Test の作成
 
-  - [JMX ファイル](#https://raw.githubusercontent.com/kohei3110/PaaS-Management-Hands-on-Lab/master/src/Contents/SampleTest.jmx) の内容をコピーし、メモ帳等に貼り付け
+  - <a href="https://raw.githubusercontent.com/kohei3110/PaaS-Management-Hands-on-Lab/master/src/Contents/SampleTest.jmx">JMX ファイル</a> の内容をコピーし、メモ帳等に貼り付け
 
   - **app-service-endpoint-url** を展開した App Service の FQDN へ置換
 
