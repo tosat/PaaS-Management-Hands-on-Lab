@@ -18,13 +18,13 @@ February 2022
 
 ### パラメーター
 
-- **storageAccountName**: ストレージ アカウント名
+- **storageAccountName**: ストレージ アカウント名（ 3-24 文字 / 数字、英小文字のみ）
 
 - **sqlServerName**: SQL Server 名
 
 - **sqlAdministratorLogin**: SQL 管理者
 
-- **sqlAdministratorPassword**: SQL 管理者パスワード
+- **sqlAdministratorPassword**: SQL 管理者パスワード（8 文字以上 / 英大文字、英小文字、数字、英数字以外の文字のうち 3 カテゴリ含む）
 
 - **webAppName**: Web App 名
 
@@ -42,7 +42,7 @@ February 2022
 
 ## リソースの設定
 
-※ **GitHub Actoins を使用してファイルのコピー、Web アプリケーションの展開を行うためにリポジトリを自身の GitHub アカウントに Fork してください。**
+※ **リポジトリを自身の GitHub アカウントに Fork ** してから作業を行ってください。
 
 - Blob ストレージ
 
@@ -158,7 +158,7 @@ February 2022
 
     - 名前: **BlobConnectionString** / 値: ストレージ アカウントへの接続文字列
 
-    - 名前: **SqlConnectionString** / 値: ContosoInsurane データベースへの接続文字列
+    - 名前: **SqlConnectionString** / 値: ContosoInsurane データベースへの接続文字列（パスワードの指定が必要）
   
   - **保存** をクリックし、アプリケーションを再起動
 

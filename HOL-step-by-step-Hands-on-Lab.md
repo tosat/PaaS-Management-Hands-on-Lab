@@ -41,7 +41,47 @@ February 2022
 
 <br />
 
+### 使用する環境
+
+<img src="images/hands-on-architecture.png" />
+
+<br />
+
+### アプリケーションの動作確認
+
+  - App Service の **概要** ページの **URL** をクリック
+
+  - 新しいタブでアプリケーションが表示
+
+    <img src="images/sample-app-01.png" />
+  
+  - **Managed Policy Holders** をクリック
+
+    <img src="images/sample-app-02.png" />
+
+    ※データベースからレコードを取得して表示
+  
+  - **Details** をクリックし、詳細情報を表示
+
+    <img src="images/sample-app-03.png" />
+  
+  - **File Path** に表示される PDF ファイルへのリンクをクリック
+
+    <img src="images/sample-app-04.png" />
+
+    ※新しいタブで PDF ファイルが表示
+  
+  - 画面上部の **File Upload** をクリック
+
+    <img src="images/sample-app-05.png" />
+
+    ※ファイルのアップロードを行う画面が表示
+
+<br />
+
 ## Exercise 1: サービス・リソース正常性
+
+<img src="images/exercise-01.png" />
 
 ### Task 1: サービス正常性アラートの追加
 
@@ -167,6 +207,8 @@ February 2022
 <br />
 
 ## Exercise 2: PaaS サービスの保護
+
+<img src="images/exercise-02.png" />
 
 ### Task 1: Defender for Cloud の有効化
 
@@ -316,6 +358,8 @@ February 2022
 
 ## Exercise 3: App Service の監視
 
+<img src="images/exercise-03.png" />
+
 ### Task 1: Load Test の実行
 
 - Azure Load Testing の管理ブレードへ移動
@@ -337,6 +381,12 @@ February 2022
   <img src="images/execute-load-test-04.png" />
 
   ※ 2 分ほどで終了
+
+  - テストの設定
+
+    <img src="images/jmeter.png" />
+
+    20 スレッドで 120 秒間アプリケーションの各ページに GET リクエストを要求
 
 <br />
 
@@ -465,6 +515,8 @@ February 2022
 <br />
 
 ## Exercise 4: SQL Database の監査
+
+<img src="images/exercise-04.png" />
 
 - SQL Server の管理ブレードから **監視** - **ログ** を選択
 
