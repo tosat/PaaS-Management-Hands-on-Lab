@@ -1,7 +1,7 @@
 ![Microsoft Cloud Workshop](images/ms-cloud-workshop.png)
 
-Network Hands-on lab  
-February 2022
+PaaS Management Hands-on lab  
+March 2022
 
 <br />
 
