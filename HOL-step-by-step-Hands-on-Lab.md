@@ -29,13 +29,15 @@ February 2022
 
   - [Task 1: Load Test の実行](#task-1-load-test-の実行)
 
-  - [Task 2: メトリックの分析](#task-2-メトリックの分析)
+  - [Task 2: メトリックの分析 (App Service)](#task-2-メトリックの分析-app-service)
 
-  - [Task 3: アプリケーションの動作確認](#task-3-アプリケーションの動作確認)
+  - [Task 3: メトリックの分析 (SQL Database)](#task-2-メトリックの分析-sql-database)
 
-  - [Task 4: アプリケーション エラーの特定](#task-4-アプリケーション-エラーの特定)
+  - [Task 4: アプリケーションの動作確認](#task-3-アプリケーションの動作確認)
 
-  - [Task 5: データベースへのアクセスを含むリクエストの確認](#task-5-データベースへのアクセスを含むリクエストの確認)
+  - [Task 5: アプリケーション エラーの特定](#task-4-アプリケーション-エラーの特定)
+
+  - [Task 6: データベースへのアクセスを含むリクエストの確認](#task-5-データベースへのアクセスを含むリクエストの確認)
 
 - [Exercise 4: SQL Database の監査](#exercise-4-sql-database-の監査)
 
@@ -390,7 +392,7 @@ February 2022
 
 <br />
 
-### Task 2: メトリックの分析
+### Task 2: メトリックの分析 (App Service)
 
 - App Service の管理ブレードへ移動し、**監視** - **メトリック** を選択
 
@@ -412,7 +414,47 @@ February 2022
 
 <br />
 
-### Task 3: アプリケーションの動作確認
+### Task 2: メトリックの分析 (SQL Database)
+
+- SQL Database の管理ブレードへ移動し、**監視** - **メトリック** を選択
+
+  <img src="images/database-metric-01.png" />
+
+- メトリックから **Data space used percent** を選択
+
+  <img src="images/database-metric-02.png" />
+
+- **新しいアラート ルール** をクリック
+
+  <img src="images/database-metric-03.png" />
+
+- 条件名をクリック
+
+  <img src="images/database-metric-04.png" />
+
+- シグナル ロジックの構成で **しきい値** を **80%** に設定し **完了** をクリック
+
+  <img src="images/database-metric-05.png" />
+
+  ※条件名のアイコンがグリーンに変更され、シグナル ロジックの構成に問題がないことを確認
+
+  <img src="images/database-metric-04_1.png" />
+
+- **アクション** タブで **＋ アクション グループの追加** をクリック
+
+  正常性アラート作成時に作成したアクション グループを選択
+
+  <img src="images/database-metric-06.png" />
+
+- **アラート ルール名** を入力し **確認および作成** をクリック
+
+  <img src="images/database-metric-07.png" />
+
+- 設定内容に問題がないことを確認し **作成** をクリック
+
+<br />
+
+### Task 4: アプリケーションの動作確認
 
 - App Service の管理ブレードの **概要** ページから URL をクリック
 
@@ -440,7 +482,7 @@ February 2022
 
 <br />
 
-### Task 4: アプリケーション エラーの特定
+### Task 5: アプリケーション エラーの特定
 
 - App Service の管理ブレードから **監視** - **ログ** を選択
 
@@ -449,14 +491,14 @@ February 2022
 - HTTP ステータス コードの合計を表示する以下のクエリを実行
 
   ```
-  AzureMetrics 
-  | where TimeGenerated > ago(12h)  
-  | where MetricName in ("Http2xx", "Http3xx", "Http4xx", "Http5xx") 
-  | summarize sum(Total) by MetricName 
+  AppServiceHTTPLogs 
+  | where TimeGenerated > ago(12h) 
+  | extend statusName = tostring(ScStatus)
+  | summarize statuscount=count() by statusName 
   | render piechart
   ```
 
-- Http 5xx ステータス コードの応答を確認
+- Http ステータス コードごとの応答数を確認
 
   <img src="images/app-service-log-02.png" />
 
@@ -496,7 +538,7 @@ February 2022
 
 <br />
 
-### Task 5: データベースへのアクセスを含むリクエストの確認
+### Task 6: データベースへのアクセスを含むリクエストの確認
 
 - Application Insights の管理ブレードを表示、**Performance** を選択
 
