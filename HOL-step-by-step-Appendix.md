@@ -195,6 +195,9 @@ February 2022
 
 - **レビューと割り当て** をクリックし、ロールへアカウントを追加
 
+<br />
+
+#### 参考情報：
 - アプリケーションからは Azure Blob Storage クライアント ライブラリ v12 を使用しストレージへマネージド ID を使用し接続
 
   ```cs
@@ -285,11 +288,17 @@ February 2022
 
 - **保存** をクリックし、表示されるメッセージで **続行** をクリック
 
+<br />
+
+#### 参考情報：
+
 - アプリケーションでは **Microsoft.Data.SqlClient** ライブラリ バージョン 2.1.0 以降を使用
 
   ※ [マネージド ID を使用してシークレットなしで App Service から SQL Database へ接続する](https://docs.microsoft.com/ja-jp/azure/app-service/tutorial-connect-msi-sql-database?tabs=windowsclient%2Cef%2Cdotnet)
 
   ※ [SqlClient での Azure Active Directory 認証の使用](https://docs.microsoft.com/ja-jp/sql/connect/ado-net/sql/azure-active-directory-authentication?view=sql-server-ver15)
+
+<br />
 
 ### Task 6: アプリケーションの動作確認
 
