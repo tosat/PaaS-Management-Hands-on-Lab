@@ -7,15 +7,29 @@ February 2022
 
 **Contents**
 
-- [Appendix: 1 Microsoft Defender for Cloud のアラート通知](#appendix-1-microsoft-defender-for-cloud-のアラート通知)
+- [Appendix 1: Microsoft Defender for Cloud のアラート通知](#appendix-1-microsoft-defender-for-cloud-のアラート通知)
 
-- [Appendix: 2 マネージド ID を使用したストレージへのアクセス](#appendix-2-マネージド-id-を使用したストレージへのアクセス)
+- [Appendix 2: マネージド ID の使用](#appendix-2-マネージド-id-の使用)
 
-- [Appendix: 3 マネージド ID を使用した SQL Database へのアクセス](#appendix-3-マネージド-id-を使用した-sql-database-へのアクセス)
+  - [Task 1: マネージド ID の有効化](#task-1-マネージド-id-の有効化)
+
+  - [Task 2: ストレージ アカウントへのアクセス許可](#task-2-ストレージ-アカウントへのアクセス許可)
+
+  - [Task 3: Azure Active Directory ユーザーを SQL サーバーの管理者へ割り当て](#task-3-azure-active-directory-ユーザーを-sql-サーバーの管理者へ割り当て)
+  
+  - [Task 4: マネージド ID へアクセス許可を付与](#task-4-マネージド-id-へアクセス許可を付与)
+
+  - [Task 5: アプリケーション構成の変更](#task-5-アプリケーション構成の変更)
+
+  - [Task 6: アプリケーションの動作確認](#task-6-アプリケーションの動作確認)
 
 <br />
 
-## Appendix: 1 Microsoft Defender for Cloud のアラート通知
+## Appendix 1: Microsoft Defender for Cloud のアラート通知
+
+<img src="images/exercise-05.png" />
+
+<br />
 
 - Azure Portal のトップ画面から **ツール** に表示される **Microsoft Defender for Cloud** をクリック
 
@@ -133,8 +147,154 @@ February 2022
 
 <br />
 
-## Appendix: 2 マネージド ID を使用したストレージへのアクセス
+## Appendix 2: マネージド ID の使用
+
+<img src="images/exercise-06.png" />
 
 <br />
 
-## Appendix: 3 マネージド ID を使用した SQL Database へのアクセス
+### Task 1: マネージド ID の有効化
+
+- App Service の管理ブレードへ移動し、**ID** を選択
+
+- **システム割り当て済み** タブで **状態** を **オン** に設定し保存
+
+  <img src="images/enable-managed-identity-01.png" />
+
+- メッセージが表示されるので **はい** をクリック
+
+- マネージド ID の構成が完了
+
+  <img src="images/enable-managed-identity-02.png" />
+
+<br />
+
+### Task 2: ストレージ アカウントへのアクセス許可
+
+- ストレージ アカウントの管理ブレードへ移動し **アクセス制御 (IAM)** を選択
+
+- **追加** - **ロール割り当ての追加** を選択
+
+  <img src="images/grant-access-to-storage-01.png" />
+
+- **ストレージ BLOB データ共同作成者** を選択し **次へ** をクリック
+
+  <img src="images/grant-access-to-storage-02.png" />
+
+- **メンバーの追加** をクリック
+
+  <img src="images/grant-access-to-storage-02.png" />
+
+- App Service 名を入力し表示されるアカウントを選択し **選択** をクリック
+
+  <img src="images/grant-access-to-storage-03.png" />
+
+- メンバーに App Service 名のアカウントが追加されたことを確認し **レビューと割り当て** をクリック
+
+  <img src="images/grant-access-to-storage-04.png" />
+
+- **レビューと割り当て** をクリックし、ロールへアカウントを追加
+
+- アプリケーションからは Azure Blob Storage クライアント ライブラリ v12 を使用しストレージへマネージド ID を使用し接続
+
+  ```cs
+  containerEndpoint = string.Format("https://{0}.blob.core.windows.net/{1}", accountName, containerName);
+
+  BlobContainerClient containerClient = new BlobContainerClient(new Uri(containerEndpoint), new DefaultAzureCredential());
+  ```
+
+  ※ ソース コードには上記コードが追加済みのためアプリケーションの再展開は必要なし
+
+  ※ [Web アプリから Azure Storage にアクセスする](https://docs.microsoft.com/ja-jp/azure/app-service/scenario-secure-app-access-storage?tabs=azure-portal%2Cprogramming-language-csharp)
+
+<br />
+
+### Task 3: Azure Active Directory ユーザーを SQL サーバーの管理者へ割り当て
+
+- SQL Server の管理ブレードへ移動し **Azure Active Directory** を選択し **管理者の設定** をクリック
+
+  <img src="images/grant-database-access-01.png" />
+
+- Azure Active Directory から管理者とするユーザーを選択
+
+  <img src="images/grant-database-access-02.png" />
+
+  ※ ポータルへのサインインに使用しているユーザーを選択
+
+- **保存** をクリック
+
+  <img src="images/grant-database-access-03.png" />
+
+<br />
+
+### Task 4: マネージド ID へアクセス許可を付与
+
+- SQL Server の管理ブレードへ移動し **ファイアウォールと仮想ネットワーク** を選択
+
+- **＋ クライアント IP の追加** をクリック
+
+  <img src="images/add-client-ip-to-firewall-01.png" />
+
+- クライアント IP が規則に追加されたことを確認し **保存** をクリック
+
+  <img src="images/add-client-ip-to-firewall-02.png" />
+
+- ContosoInsurance データベースの管理ブレードへ移動
+
+- **クエリ エディター (プレビュー)** を選択し、先の手順で設定した管理者で続行をクリック
+
+  <img src="images/grant-access-to-database-01.png" />
+
+- SQL プロンプトで次のコマンドを実行し、マネージド ID へアクセス許可を付与
+
+  ```sql
+  CREATE USER [your_app_service] FROM EXTERNAL PROVIDER;
+  ALTER ROLE db_datareader ADD MEMBER [your_app_service];
+  GO
+  ```
+
+  ※ your_app_service を App Service 名に変更
+
+  <img src="images/grant-access-to-database-02.png" />
+
+<br />
+
+### Task 5: アプリケーション構成の変更
+
+- App Service の管理ブレードへ移動し **構成** を選択
+
+- **BlobConnectionString** をクリック
+
+  <img src="images/app-service-configuration-01.png" />
+
+- **値** を空白にし **OK** をクリック
+
+  <img src="images/app-service-configuration-02.png" />
+
+- **SqlConnectionString** をクリック
+
+- **値** を以下の接続文字列へ変更
+
+  ```
+  Server=tcp:<your_sql_server>.database.windows.net,1433;Initial Catalog=ContosoInsurance;Authentication=Active Directory MSI;
+  ```
+
+  ※ <your_sql_server> を SQL Server 名へ変更
+
+  <img src="images/app-service-configuration-03.png" />
+
+- **保存** をクリックし、表示されるメッセージで **続行** をクリック
+
+- アプリケーションでは **Microsoft.Data.SqlClient** ライブラリ バージョン 2.1.0 以降を使用
+
+  ※ [マネージド ID を使用してシークレットなしで App Service から SQL Database へ接続する](https://docs.microsoft.com/ja-jp/azure/app-service/tutorial-connect-msi-sql-database?tabs=windowsclient%2Cef%2Cdotnet)
+
+  ※ [SqlClient での Azure Active Directory 認証の使用](https://docs.microsoft.com/ja-jp/sql/connect/ado-net/sql/azure-active-directory-authentication?view=sql-server-ver15)
+
+### Task 6: アプリケーションの動作確認
+
+- App Service の管理ブレードの **概要** タブから **URL** をクリック
+
+- データベースからレコードを取得して表示できることを確認
+
+- Blob ストレージへファイルのアップロードが正常に行えることを確認
