@@ -79,7 +79,7 @@ February 2022
 
     <img src="images/create-logic-apps-03.png" />
 
-  - **ロジック アプリ デザイナー** が開くので **Blank Logic App** テンプレートを選択
+  - **ロジック アプリ デザイナー** が開くので **空のロジック アプリ** テンプレートを選択
 
     <img src="images/create-logic-apps-04.png" />
 
@@ -87,53 +87,63 @@ February 2022
 
     <img src="images/create-logic-apps-05.png" />
 
-  - 検索ボックスに **Defender** と入力し、**Triggers** の **トリガー - 新しい WDATP アラートが発生したときにトリガー** を選択 
+  - 検索ボックスに **Security Center** と入力し、**トリガー** から **Azure Security Center の通知が作成またはトリガーされたとき** を選択 
 
     <img src="images/create-logic-apps-06.png" />
 
-  - **Sign in** をクリック
+  - 選択したトリガーがデザイナーに追加
 
     <img src="images/create-logic-apps-07.png" />
 
-    ※別ウィンドウで認証を求められるため、ワークショップで使用している資格情報を使用して認証処
+    ※資格情報の入力を求められた場合は、サインインをクリックし、ワークショップで使用している資格情報を使用
 
-    ※アクセス許可を求めるメッセージが奉持される場合は許諾
-
-  - **+ New step** をクリック
+  - **新しいステップ** をクリック
 
     <img src="images/create-logic-apps-08.png" />
 
-  - 検索ボックスに **Outlook** と入力し、表示される候補から **Outlook.com** を選択
+  - **メールの送信 (V2)** を選択
 
     <img src="images/create-logic-apps-09.png" />
 
-  - **メールの送信 (V2)** を選択
+  - **サインイン** をクリック
 
     <img src="images/create-logic-apps-10.png" />
-
-  - **Sign in** をクリック
-
-    <img src="images/create-logic-apps-11.png" />
 
     ※別ウィンドウで認証を求められるため、ワークショップで使用している資格情報を入力
 
     ※アクセス許可を求めるメッセージが表示される場合は許諾
 
+      <img src="images/create-logic-apps-11.png" />
+
 - メール送信に必要な情報を設定
 
     - **宛先**： 任意
 
-    - **件名**： Security Alert: アラートID（アラート ID は Dynamic content から選択）
+    - **件名**： 重要度: security threat detected by Microsoft Defender for Cloud
 
-    - **本文**： アラート ID と Body を Dynamic content から選択
+    - **本文**：
+
+      Potential security threat detected by Microsoft Defender for Cloud
+
+      Alert name: 通知の表示名
+
+      Severity: 重要度
+
+      Description: 説明
+
+      Detection time: 開始時刻 (UTC)
+
+      URI: 通知 URI
+
+    <img src="images/create-logic-apps-12.png" />
+
+    ※ 重要度や通知の表示名などは **動的コンテンツ** から取得
 
     <img src="images/create-logic-apps-13.png" />
 
-    <img src="images/create-logic-apps-14.png" />
-
 - **保存** をクリックし、ワークフローの作成を終了
 
-    <img src="images/create-logic-apps-15.png" />
+    <img src="images/create-logic-apps-14.png" />
 
 - ワークフローの自動化を設定中のタブに切り替え
 
@@ -141,9 +151,13 @@ February 2022
 
   <img src="images/defender-for-cloud-workflow-03.png" />
 
-- 完了
+- **作成** をクリック
 
   <img src="images/defender-for-cloud-workflow-04.png" />
+
+- 指定したロジック アプリのワークフローが追加
+
+  <img src="images/defender-for-cloud-workflow-05.png" />
 
 <br />
 
